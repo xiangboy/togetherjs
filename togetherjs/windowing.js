@@ -127,16 +127,15 @@ define(["jquery", "util", "peers", "session"], function ($, util, peers, session
       element = $(element);
       windows.push(element);
       var bound = element.data("boundTo");
-      if (! bound) {
-        return;
+      if (bound) {
+        bound = $(bound);
+        bound.addClass("togetherjs-animated").addClass("togetherjs-color-pulse");
+        setTimeout(function () {
+          bound.removeClass("togetherjs-color-pulse").removeClass("togetherjs-animated");
+        }, ANIMATION_DURATION+10);
+        element.data("boundTo", null);
+        bound.removeClass("togetherjs-active");
       }
-      bound = $(bound);
-      bound.addClass("togetherjs-animated").addClass("togetherjs-color-pulse");
-      setTimeout(function () {
-        bound.removeClass("togetherjs-color-pulse").removeClass("togetherjs-animated");
-      }, ANIMATION_DURATION+10);
-      element.data("boundTo", null);
-      bound.removeClass("togetherjs-active");
       if (element.hasClass("togetherjs-notification")) {
         element.fadeOut().promise().then(function () {
           this.hide();
